@@ -1,0 +1,21 @@
+<form [formGroup]="requestForm" (ngSubmit)="submitForm()">
+  <div>
+    <label for="description">Description</label>
+    <input type="text" id="description" formControlname="description">
+  </div>
+  
+  <div>
+    <label for="type">Type</label>
+    <div>
+      @for (type of types; track type.id) {
+        <input type="radio" for="type.name" formControlName="type.name" name="types" id="type.id" value="type.name">
+        <label>{{type.name}}</label>
+      }
+    </div>
+  </div>
+  
+  <div>
+    <label for="date">Date</label>
+    <input type="date" id="date" formControlName="date">
+  </div>  
+</form>
