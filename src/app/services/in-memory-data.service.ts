@@ -3,7 +3,6 @@ import { InMemoryDbService, RequestInfo } from 'angular-in-memory-web-api';
 import { Observable } from 'rxjs';
 import { LeaveRequest } from '../interfaces/leave-request';
 import { LeaveType } from '../interfaces/leave-type';
-import { LeaveTypeModel } from '../models/leave-type.model';
 
 @Injectable({
   providedIn: 'root'

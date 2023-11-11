@@ -7,7 +7,7 @@
   <div>
     <label for="type">Type</label>
     <div>
-      @for (type of types; track type.id) {
+      @for (type of leaveTypes; track type.id) {
         <div>
           <input type="radio" for="type" id="type.id" [value]="type.id" formControlName="type">
           <label for="type.id">{{type.name}}</label>

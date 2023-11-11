@@ -4,6 +4,7 @@ import { Observable, catchError, of, tap } from 'rxjs';
 import { LeaveType } from '../interfaces/leave-type';
 import { MessageService } from './message.service';
 import { LeaveRequestModel } from '../models/leave-request.model';
+import { LeaveTypeModel } from '../models/leave-type.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,11 +38,15 @@ export class LeaveRequestsService {
   ) { }
   
   getLeaveTypes(): Observable<LeaveType[]> {
-    return this.http.get<LeaveType[]>(`${this.url}/leaveTypes`);
+    let leaveTypes = this.http.get<LeaveType[]>(`${this.url}/leaveTypes`)
+      .pipe(
+        tap(_ => this.log('fetched leave types')),
+        catchError(this.handleError<LeaveTypeModel[]>('getLeaveTypes', []))
+      );
+    return leaveTypes;
   }
 
   getLeaveRequests(): Observable<LeaveRequestModel[]> {
-    console.log('get requests');
     let leaveRequests = this.http.get<LeaveRequestModel[]>(`${this.url}/leaveRequests`)
       .pipe(
         tap(_ => this.log('fetched leave requests')),

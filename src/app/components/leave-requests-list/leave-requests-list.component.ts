@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LeaveRequestsService } from '../../services/leave-requests.service';
 import { Observable } from 'rxjs';
 import { LeaveRequestModel } from '../../models/leave-request.model';
