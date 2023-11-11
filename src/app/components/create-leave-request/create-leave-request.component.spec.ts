@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateRequestComponent } from './create-request.component';
+import { CreateRequestComponent } from './create-leave-request.component';
 
 describe('CreateRequestComponent', () => {
   let component: CreateRequestComponent;

@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LeaveType } from '../../models/leave-type';
 @Component({
-  selector: 'ch-create-request',
-  templateUrl: './create-request.component.html',
-  styleUrl: './create-request.component.scss'
+  selector: 'ch-create-leave-request',
+  templateUrl: './create-leave-request.component.html',
+  styleUrl: './create-leave-request.component.scss'
 })
 
 
