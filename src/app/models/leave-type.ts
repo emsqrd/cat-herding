@@ -1,4 +1,4 @@
-export interface Types {
+export interface LeaveType {
   id: number;
   name: string;
 }

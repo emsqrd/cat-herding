@@ -1,0 +1,28 @@
+<form [formGroup]="leaveRequestForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="description">Description</label>
+    <input type="text" id="description" formControlName="description">
+  </div>
+  
+  <div>
+    <label for="type">Type</label>
+    <div>
+      @for (type of types; track type.id) {
+        <div>
+          <input type="radio" for="type" id="type.id" [value]="type.id" formControlName="type">
+          <label for="type.id">{{type.name}}</label>
+        </div>
+      }
+    </div>
+  </div>
+  
+  <div>
+    <label for="date">Date</label>
+    <input type="date" id="date" formControlName="date">
+  </div>  
+
+  <div>
+    <button type="button" (click)="onSubmit()">Create</button>
+  </div>
+  
+</form>
