@@ -1,25 +1,50 @@
 import { Injectable } from '@angular/core';
 import { LeaveRequest } from '../models/leave-request';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of, tap } from 'rxjs';
 import { LeaveType } from '../models/leave-type';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeaveRequestsService {
 
-  private url: string = '../data';
+  private url: string = 'api';
+
+
+  private log(message: string){
+    this.messageService.add(`HeroService: ${message}`);
+  }
+  
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.log(error);
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    }
+  }
 
   constructor(
     private http: HttpClient,
+    private messageService: MessageService,
   ) { }
-
+  
   getLeaveTypes(): Observable<LeaveType[]> {
-    return this.http.get<LeaveType[]>(`${this.url}/leave-types.json`);
+    return this.http.get<LeaveType[]>(`${this.url}/leaveTypes`);
   }
 
   getLeaveRequests(): Observable<LeaveRequest[]> {
-    return this.http.get<LeaveRequest[]>(`${this.url}/leave-requests.json`);
+    return this.http.get<LeaveRequest[]>(`${this.url}/leaveRequests`)
+      .pipe(
+        tap(_ => this.log('fetched leave requests')),
+        catchError(this.handleError<LeaveRequest[]>('getLeaveRequests', []))      
+      );
   }
 }
