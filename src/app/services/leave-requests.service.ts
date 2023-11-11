@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { LeaveRequest } from '../models/leave-request';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
-import { LeaveType } from '../models/leave-type';
+import { LeaveType } from '../interfaces/leave-type';
 import { MessageService } from './message.service';
+import { LeaveRequestModel } from '../models/leave-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,11 +40,13 @@ export class LeaveRequestsService {
     return this.http.get<LeaveType[]>(`${this.url}/leaveTypes`);
   }
 
-  getLeaveRequests(): Observable<LeaveRequest[]> {
-    return this.http.get<LeaveRequest[]>(`${this.url}/leaveRequests`)
+  getLeaveRequests(): Observable<LeaveRequestModel[]> {
+    console.log('get requests');
+    let leaveRequests = this.http.get<LeaveRequestModel[]>(`${this.url}/leaveRequests`)
       .pipe(
         tap(_ => this.log('fetched leave requests')),
-        catchError(this.handleError<LeaveRequest[]>('getLeaveRequests', []))      
+        catchError(this.handleError<LeaveRequestModel[]>('getLeaveRequests', []))      
       );
+    return leaveRequests;    
   }
 }

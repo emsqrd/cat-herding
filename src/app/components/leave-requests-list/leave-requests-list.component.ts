@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { LeaveRequestsService } from '../../services/leave-requests.service';
-import { LeaveRequest } from '../../models/leave-request';
-import { LeaveType } from '../../models/leave-type';
 import { Observable } from 'rxjs';
+import { LeaveRequestModel } from '../../models/leave-request.model';
 
 @Component({
   selector: 'ch-leave-requests-list',
@@ -12,15 +11,19 @@ import { Observable } from 'rxjs';
 
 export class LeaveRequestsListComponent {
 
-  leaveRequests$: Observable<LeaveRequest[]> = new Observable();
-  leaveTypes: LeaveType[] = [];
+  leaveRequests: LeaveRequestModel[] = [];
 
   constructor(
     private leaveRequestService: LeaveRequestsService,
   ) { }
 
+  getLeaveRequests(): void {
+    this.leaveRequestService.getLeaveRequests()
+      .subscribe(leaveRequests => this.leaveRequests = leaveRequests);
+  }
+
   ngOnInit() {
-    this.leaveRequests$ = this.leaveRequestService.getLeaveRequests();
+    this.getLeaveRequests();
   }
 
 

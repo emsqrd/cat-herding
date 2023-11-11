@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService, RequestInfo } from 'angular-in-memory-web-api';
 import { Observable } from 'rxjs';
-import { LeaveRequest } from '../models/leave-request';
-import { LeaveType } from '../models/leave-type';
+import { LeaveRequest } from '../interfaces/leave-request';
+import { LeaveType } from '../interfaces/leave-type';
+import { LeaveTypeModel } from '../models/leave-type.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,20 @@ export class InMemoryDataService implements InMemoryDbService {
     const leaveRequests = [
       {
         id: 1,
-        description: "Vacation",
-        type: 1,
+        description: "Going to Chicago",
+        leaveType: {
+          id: 1,
+          name: "Vacation",
+        },
         leaveDate: "11/12/2023"
       },
       {
         id: 2,
-        description: "Cancun",
-        type: 2,
+        description: "Not feeling good",
+        leaveType: {
+          id: 2,
+          name: "Sick",
+        },
         leaveDate: "11/2/2023"
       },
     ];

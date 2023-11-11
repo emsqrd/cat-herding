@@ -1,6 +1,8 @@
+import { LeaveType } from './leave-type';
+
 export interface LeaveRequest {
   id: number;
   description: string;
-  type: number;
+  leaveType: LeaveType;
   leaveDate: Date;
 }
