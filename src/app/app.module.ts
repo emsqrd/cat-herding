@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CreateRequestComponent } from './components/create-leave-request/create-leave-request.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LeaveRequestsListComponent } from './components/leave-requests-list/leave-requests-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { LeaveRequestsListComponent } from './components/leave-requests-list/lea
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

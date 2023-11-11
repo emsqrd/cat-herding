@@ -8,7 +8,7 @@
 </thead>
 <tbody>
   <tr>
-    @for (request of leaveRequests; track request.id) {
+    @for (request of leaveRequests$ | async; track request.id) {
       <td>{{request.description}}</td>
       <td>{{request.type}}</td>
       <td>{{request.leaveDate}}</td>
