@@ -6,6 +6,7 @@ import { CreateRequestComponent } from './components/create-leave-request/create
 const routes: Routes = [
   { path: '', component: LeaveRequestsListComponent },
   { path: 'create', component: CreateRequestComponent },
+  { path: 'leave-request-list', component: LeaveRequestsListComponent },
 ];
 
 @NgModule({

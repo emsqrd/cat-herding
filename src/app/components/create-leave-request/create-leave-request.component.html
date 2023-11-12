@@ -7,9 +7,9 @@
   <div>
     <label for="type">Type</label>
     <div>
-      @for (type of types; track type.id) {
+      @for (type of leaveTypes; track type.id) {
         <div>
-          <input type="radio" for="type" id="type.id" [value]="type.id" formControlName="type">
+          <input type="radio" for="type" id="type.id" [value]="type.name" formControlName="leaveType">
           <label for="type.id">{{type.name}}</label>
         </div>
       }
@@ -17,12 +17,12 @@
   </div>
   
   <div>
-    <label for="date">Date</label>
-    <input type="date" id="date" formControlName="date">
+    <label for="leaveDate">Date</label>
+    <input type="date" id="leaveDate" formControlName="leaveDate">
   </div>  
 
   <div>
-    <button type="button" (click)="onSubmit()">Create</button>
+    <button type="submit">Create</button>
   </div>
   
 </form>
