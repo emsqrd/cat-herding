@@ -5,13 +5,13 @@ import { LeaveTypeModel } from './leave-type.model';
 export class LeaveRequestModel implements LeaveRequest{
   id: number;
   description: string;
-  leaveType: LeaveType;
+  leaveType: string;
   leaveDate: Date;
 
   constructor() {
     this.id = 0;
     this.description = '';
-    this.leaveType = new LeaveTypeModel();
+    this.leaveType = '';
     this.leaveDate = new Date();
   }
 }

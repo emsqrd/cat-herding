@@ -3,6 +3,6 @@ import { LeaveType } from './leave-type';
 export interface LeaveRequest {
   id: number;
   description: string;
-  leaveType: LeaveType;
+  leaveType: string;
   leaveDate: Date;
 }

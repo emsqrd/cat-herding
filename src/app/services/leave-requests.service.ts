@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { LeaveType } from '../interfaces/leave-type';
 import { MessageService } from './message.service';
@@ -11,10 +11,16 @@ import { LeaveTypeModel } from '../models/leave-type.model';
 })
 export class LeaveRequestsService {
 
-  private url: string = 'api';
+  private baseUrl: string = 'api';
+  private leaveRequestsUrl: string = `${this.baseUrl}/leaveRequests`;
+  private leaveTypesUrl: string = `${this.baseUrl}/leaveTypes`;
 
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  }
 
   private log(message: string){
+    console.log(message);
     this.messageService.add(`HeroService: ${message}`);
   }
   
@@ -38,7 +44,7 @@ export class LeaveRequestsService {
   ) { }
   
   getLeaveTypes(): Observable<LeaveType[]> {
-    let leaveTypes = this.http.get<LeaveType[]>(`${this.url}/leaveTypes`)
+    let leaveTypes = this.http.get<LeaveType[]>(this.leaveTypesUrl)
       .pipe(
         tap(_ => this.log('fetched leave types')),
         catchError(this.handleError<LeaveTypeModel[]>('getLeaveTypes', []))
@@ -47,11 +53,20 @@ export class LeaveRequestsService {
   }
 
   getLeaveRequests(): Observable<LeaveRequestModel[]> {
-    let leaveRequests = this.http.get<LeaveRequestModel[]>(`${this.url}/leaveRequests`)
+    let leaveRequests = this.http.get<LeaveRequestModel[]>(this.leaveRequestsUrl)
       .pipe(
         tap(_ => this.log('fetched leave requests')),
-        catchError(this.handleError<LeaveRequestModel[]>('getLeaveRequests', []))      
+        catchError(this.handleError<LeaveRequestModel[]>('getLeaveRequests', []))
       );
-    return leaveRequests;    
+    return leaveRequests;
+  }
+
+  createLeaveRequest(leaveRequest: LeaveRequestModel): Observable<LeaveRequestModel> {
+    let createdLeaveRequest = this.http.post<LeaveRequestModel>(this.leaveRequestsUrl, leaveRequest, this.httpOptions)
+      .pipe(
+        tap((newLeaveRequest: LeaveRequestModel) => this.log(`added new leave request w/ id: ${newLeaveRequest.id}`)),
+        catchError(this.handleError<LeaveRequestModel>('createLeaveRequest'))
+      )
+    return createdLeaveRequest;
   }
 }

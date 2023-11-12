@@ -13,6 +13,10 @@ export class LeaveRequestsListComponent {
 
   leaveRequests: LeaveRequestModel[] = [];
 
+  public getLeaveDate(leaveDate: Date): string {
+    return new Date(leaveDate).toLocaleDateString("en-US");
+  }
+
   constructor(
     private leaveRequestService: LeaveRequestsService,
   ) { }

@@ -1,5 +1,5 @@
 <div>
-  <a [routerLink]="['/create']" routerLinkActive="router-link-active" >Create</a>
+  <button [routerLink]="['/create']" routerLinkActive="router-link-active" >Add New Leave Request</button>
 </div>
 
 <table>
@@ -14,8 +14,8 @@
   @for (leaveRequest of leaveRequests; track leaveRequest.id) {
   <tr>
      <td>{{leaveRequest.description}}</td>
-     <td>{{leaveRequest.leaveType.name}}</td>
-     <td>{{leaveRequest.leaveDate}}</td>
+     <td>{{leaveRequest.leaveType}}</td>
+     <td>{{getLeaveDate(leaveRequest.leaveDate)}}</td>
   </tr>
   }
 </tbody>

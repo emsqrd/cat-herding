@@ -11,32 +11,27 @@ export class InMemoryDataService implements InMemoryDbService {
 
   createDb(reqInfo?: RequestInfo | undefined): {} | Observable<{}> | Promise<{}> {
 
-    const leaveRequests = [
-      {
-        id: 1,
-        description: "Going to Chicago",
-        leaveType: {
-          id: 1,
-          name: "Vacation",
-        },
-        leaveDate: "11/12/2023"
-      },
-      {
-        id: 2,
-        description: "Not feeling good",
-        leaveType: {
-          id: 2,
-          name: "Sick",
-        },
-        leaveDate: "11/2/2023"
-      },
-    ];
 
     const leaveTypes = [
       { id: 1, name: "Vacation" },
       { id: 2, name: "Sick" },
       { id: 3, name: "Volunteer" },
       { id: 4, name: "Appointment" },
+    ];
+
+    const leaveRequests = [
+      {
+        id: 1,
+        description: "Going to Chicago",
+        leaveType: "Vacation",
+        leaveDate: "11/12/2023"
+      },
+      {
+        id: 2,
+        description: "Not feeling good",
+        leaveType: "Sick",
+        leaveDate: "11/2/2023"
+      },
     ];
 
     return { leaveRequests, leaveTypes };
