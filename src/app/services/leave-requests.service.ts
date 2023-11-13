@@ -5,6 +5,7 @@ import { LeaveType } from '../interfaces/leave-type';
 import { MessageService } from './message.service';
 import { LeaveRequestModel } from '../models/leave-request.model';
 import { LeaveTypeModel } from '../models/leave-type.model';
+import { LeaveRequest } from '../interfaces/leave-request';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +20,8 @@ export class LeaveRequestsService {
   };
 
   private log(message: string) {
-    console.log(message);
-    this.messageService.add(`HeroService: ${message}`);
+    // console.log(message);
+    this.messageService.add(`LeaveRequestService: ${message}`);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -29,7 +30,7 @@ export class LeaveRequestsService {
       console.log(error);
 
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      console.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -94,22 +95,27 @@ export class LeaveRequestsService {
     return createdLeaveRequest;
   }
 
-  updateLeaveRequest(
-    id: number,
-    leaveRequest: LeaveRequestModel
-  ): Observable<LeaveRequestModel> {
+  updateLeaveRequest(id: number, leaveRequest: LeaveRequest): Observable<any> {
+    // this feels wonky, but I need to manually set the id so it's part of the model
+    // otherwise the api returns a 404 because of an undefined id
+    leaveRequest.id = id;
     let updatedLeaveRequest = this.http
-      .put<LeaveRequestModel>(
-        `${this.leaveRequestsUrl}/${id}`,
-        leaveRequest,
-        this.httpOptions
-      )
+      .put(`${this.leaveRequestsUrl}/${id}`, leaveRequest, this.httpOptions)
       .pipe(
-        tap((leaveRequest: LeaveRequestModel) =>
-          this.log(`updated leave request w/ id: ${id}`)
-        ),
+        tap((_) => this.log(`updated leave request w/ id: ${leaveRequest.id}`)),
         catchError(this.handleError<LeaveRequestModel>('updateLeaveRequest'))
       );
     return updatedLeaveRequest;
+  }
+
+  deleteLeaveRequest(id: number): Observable<any> {
+    let deletedLeaveRequest = this.http
+      .delete(`${this.leaveRequestsUrl}/${id}`)
+      .pipe(
+        tap((_) => this.log(`deleted leave request w/ id: ${id}`)),
+        catchError(this.handleError<LeaveRequestModel>('deleteLeaveRequest'))
+      );
+
+    return deletedLeaveRequest;
   }
 }

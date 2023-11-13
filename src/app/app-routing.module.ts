@@ -6,8 +6,8 @@ import { EditLeaveRequestComponent } from './components/edit-leave-request/edit-
 
 const routes: Routes = [
   { path: '', component: LeaveRequestsListComponent },
-  { path: 'leaverequest/new', component: CreateRequestComponent },
-  { path: 'leaverequest/:id', component: EditLeaveRequestComponent },
+  { path: 'leaverequests/new', component: CreateRequestComponent },
+  { path: 'leaverequests/:id', component: EditLeaveRequestComponent },
   { path: 'leave-request-list', component: LeaveRequestsListComponent },
 ];
 

@@ -23,6 +23,12 @@ export class LeaveRequestsListComponent {
       .subscribe((leaveRequests) => (this.leaveRequests = leaveRequests));
   }
 
+  deleteLeaveRequest(id: number): void {
+    this.leaveRequestService.deleteLeaveRequest(id).subscribe({
+      next: () => this.getLeaveRequests(),
+    });
+  }
+
   ngOnInit() {
     this.getLeaveRequests();
   }

@@ -15,7 +15,14 @@
       <td>{{ leaveRequest.leaveType }}</td>
       <td>{{ getLeaveDate(leaveRequest.leaveDate) }}</td>
       <td>
-        <button [routerLink]="['/leaverequest/', leaveRequest.id]">Edit</button>
+        <button [routerLink]="['/leaverequests/', leaveRequest.id]">
+          Edit
+        </button>
+      </td>
+      <td>
+        <button type="button" (click)="deleteLeaveRequest(leaveRequest.id)">
+          Delete
+        </button>
       </td>
     </tr>
     }
@@ -24,7 +31,7 @@
 
 <div>
   <button
-    [routerLink]="['/leaverequest/new']"
+    [routerLink]="['/leaverequests/new']"
     routerLinkActive="router-link-active"
   >
     Add New Leave Request
