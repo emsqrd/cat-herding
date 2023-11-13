@@ -1,6 +1,4 @@
-<div>
-  <button [routerLink]="['/create']" routerLinkActive="router-link-active" >Add New Leave Request</button>
-</div>
+<h2>Leave Request List</h2>
 
 <table>
   <thead>
@@ -9,14 +7,33 @@
       <th>Leave Type</th>
       <th>Leave Date</th>
     </tr>
-</thead>
-<tbody>
-  @for (leaveRequest of leaveRequests; track leaveRequest.id) {
-  <tr>
-     <td>{{leaveRequest.description}}</td>
-     <td>{{leaveRequest.leaveType}}</td>
-     <td>{{getLeaveDate(leaveRequest.leaveDate)}}</td>
-  </tr>
-  }
-</tbody>
+  </thead>
+  <tbody>
+    @for (leaveRequest of leaveRequests; track leaveRequest.id) {
+    <tr>
+      <td>{{ leaveRequest.description }}</td>
+      <td>{{ leaveRequest.leaveType }}</td>
+      <td>{{ getLeaveDate(leaveRequest.leaveDate) }}</td>
+      <td>
+        <button [routerLink]="['/leaverequests/', leaveRequest.id]">
+          Edit
+        </button>
+      </td>
+      <td>
+        <button type="button" (click)="deleteLeaveRequest(leaveRequest.id)">
+          Delete
+        </button>
+      </td>
+    </tr>
+    }
+  </tbody>
 </table>
+
+<div>
+  <button
+    [routerLink]="['/leaverequests/new']"
+    routerLinkActive="router-link-active"
+  >
+    Add New Leave Request
+  </button>
+</div>
