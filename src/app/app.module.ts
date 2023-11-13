@@ -9,12 +9,16 @@ import { LeaveRequestsListComponent } from './components/leave-requests-list/lea
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './services/in-memory-data.service';
+import { LeaveRequestFormComponent } from './components/leave-request-form/leave-request-form.component';
+import { EditLeaveRequestComponent } from './components/edit-leave-request/edit-leave-request.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateRequestComponent,
-    LeaveRequestsListComponent
+    LeaveRequestsListComponent,
+    LeaveRequestFormComponent,
+    EditLeaveRequestComponent
   ],
   imports: [
     BrowserModule,

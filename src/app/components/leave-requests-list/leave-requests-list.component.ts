@@ -6,29 +6,30 @@ import { LeaveRequestModel } from '../../models/leave-request.model';
 @Component({
   selector: 'ch-leave-requests-list',
   templateUrl: './leave-requests-list.component.html',
-  styleUrl: './leave-requests-list.component.scss'
+  styleUrl: './leave-requests-list.component.scss',
 })
-
 export class LeaveRequestsListComponent {
-
   leaveRequests: LeaveRequestModel[] = [];
 
   public getLeaveDate(leaveDate: Date): string {
-    return new Date(leaveDate).toLocaleDateString("en-US");
+    return new Date(leaveDate).toLocaleDateString('en-US');
   }
 
-  constructor(
-    private leaveRequestService: LeaveRequestsService,
-  ) { }
+  constructor(private leaveRequestService: LeaveRequestsService) {}
 
   getLeaveRequests(): void {
-    this.leaveRequestService.getLeaveRequests()
-      .subscribe(leaveRequests => this.leaveRequests = leaveRequests);
+    this.leaveRequestService
+      .getLeaveRequests()
+      .subscribe((leaveRequests) => (this.leaveRequests = leaveRequests));
+  }
+
+  deleteLeaveRequest(id: number): void {
+    this.leaveRequestService.deleteLeaveRequest(id).subscribe({
+      next: () => this.getLeaveRequests(),
+    });
   }
 
   ngOnInit() {
     this.getLeaveRequests();
   }
-
-
 }

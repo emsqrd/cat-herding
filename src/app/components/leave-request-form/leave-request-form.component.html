@@ -1,0 +1,37 @@
+<form
+  autocomplete="off"
+  [formGroup]="leaveRequestForm"
+  (ngSubmit)="submitForm()"
+>
+  <div>
+    <label for="description">Description</label>
+    <input type="text" id="description" formControlName="description" />
+  </div>
+
+  <div>
+    <label for="type">Type</label>
+    <div>
+      @for (type of leaveTypes; track type.id) {
+      <div>
+        <input
+          type="radio"
+          for="type"
+          id="type.id"
+          [value]="type.name"
+          formControlName="leaveType"
+        />
+        <label for="type.id">{{ type.name }}</label>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div>
+    <label for="leaveDate">Date</label>
+    <input type="date" id="leaveDate" formControlName="leaveDate" />
+  </div>
+
+  <div>
+    <button type="submit">Submit</button>
+  </div>
+</form>
