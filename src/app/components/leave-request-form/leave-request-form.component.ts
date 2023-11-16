@@ -26,7 +26,6 @@ export class LeaveRequestFormComponent {
   leaveTypes: LeaveType[] = [];
 
   constructor(
-    private router: Router,
     private fb: FormBuilder,
     private leaveRequestsService: LeaveRequestsService
   ) {}

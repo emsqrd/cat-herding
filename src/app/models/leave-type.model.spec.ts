@@ -1,7 +1,7 @@
-import { LeaveType } from './leave-type';
+import { LeaveTypeModel } from './leave-type.model';
 
 describe('LeaveType', () => {
   it('should create an instance', () => {
-    expect(new LeaveType()).toBeTruthy();
+    expect(new LeaveTypeModel()).toBeTruthy();
   });
 });
