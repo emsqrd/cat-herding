@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', component: LeaveRequestsListComponent },
   { path: 'leaverequests/new', component: CreateRequestComponent },
   { path: 'leaverequests/:id', component: EditLeaveRequestComponent },
-  { path: 'leave-request-list', component: LeaveRequestsListComponent },
+  { path: 'list', component: LeaveRequestsListComponent },
 ];
 
 @NgModule({

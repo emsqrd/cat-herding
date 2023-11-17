@@ -9,7 +9,7 @@ import { LeaveRequestModel } from '../../models/leave-request.model';
   styleUrl: './leave-requests-list.component.scss',
 })
 export class LeaveRequestsListComponent {
-  public leaveRequests$: Observable<LeaveRequestModel[]>;
+  leaveRequests$: Observable<LeaveRequestModel[]>;
 
   public getLeaveDate(leaveDate: Date): string {
     return new Date(leaveDate).toLocaleDateString('en-US');
@@ -17,20 +17,17 @@ export class LeaveRequestsListComponent {
 
   constructor(private leaveRequestService: LeaveRequestsService) {}
 
-  // getLeaveRequests(): void {
-  //   this.leaveRequestService
-  //     .getLeaveRequests()
-  //     .subscribe((leaveRequests) => (this.leaveRequests = leaveRequests));
-  // }
+  getLeaveRequests(): void {
+    this.leaveRequests$ = this.leaveRequestService.getLeaveRequests();
+  }
 
   deleteLeaveRequest(id: number): void {
     this.leaveRequestService.deleteLeaveRequest(id).subscribe({
-      // next: () => this.getLeaveRequests(),
+      next: () => this.getLeaveRequests(),
     });
   }
 
   ngOnInit() {
-    // this.getLeaveRequests();
-    this.leaveRequests$ = this.leaveRequestService.getLeaveRequests();
+    this.getLeaveRequests();
   }
 }

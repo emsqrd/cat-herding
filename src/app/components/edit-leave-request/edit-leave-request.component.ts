@@ -24,7 +24,7 @@ export class EditLeaveRequestComponent {
       .updateLeaveRequest(this.leaveRequest.value.id, leaveRequest)
       .subscribe({
         next: () => {
-          this.router.navigate(['/leave-request-list']);
+          this.router.navigate(['/list']);
         },
         error: (error) => {
           console.error(error);

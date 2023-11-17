@@ -17,7 +17,7 @@ export class CreateRequestComponent {
   createLeaveRequest(leaveRequest: LeaveRequest) {
     this.leaveRequestsService.createLeaveRequest(leaveRequest).subscribe({
       next: () => {
-        this.router.navigate(['/leave-request-list']);
+        this.router.navigate(['/list']);
       },
     });
   }
