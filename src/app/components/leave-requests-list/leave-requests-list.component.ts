@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LeaveRequestsService } from '../../services/leave-requests.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { LeaveRequestModel } from '../../models/leave-request.model';
 
 @Component({
@@ -9,7 +9,7 @@ import { LeaveRequestModel } from '../../models/leave-request.model';
   styleUrl: './leave-requests-list.component.scss',
 })
 export class LeaveRequestsListComponent {
-  leaveRequests: LeaveRequestModel[] = [];
+  public leaveRequests$: Observable<LeaveRequestModel[]>;
 
   public getLeaveDate(leaveDate: Date): string {
     return new Date(leaveDate).toLocaleDateString('en-US');
@@ -17,19 +17,20 @@ export class LeaveRequestsListComponent {
 
   constructor(private leaveRequestService: LeaveRequestsService) {}
 
-  getLeaveRequests(): void {
-    this.leaveRequestService
-      .getLeaveRequests()
-      .subscribe((leaveRequests) => (this.leaveRequests = leaveRequests));
-  }
+  // getLeaveRequests(): void {
+  //   this.leaveRequestService
+  //     .getLeaveRequests()
+  //     .subscribe((leaveRequests) => (this.leaveRequests = leaveRequests));
+  // }
 
   deleteLeaveRequest(id: number): void {
     this.leaveRequestService.deleteLeaveRequest(id).subscribe({
-      next: () => this.getLeaveRequests(),
+      // next: () => this.getLeaveRequests(),
     });
   }
 
   ngOnInit() {
-    this.getLeaveRequests();
+    // this.getLeaveRequests();
+    this.leaveRequests$ = this.leaveRequestService.getLeaveRequests();
   }
 }

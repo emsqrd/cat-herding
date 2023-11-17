@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    @for (leaveRequest of leaveRequests; track leaveRequest.id) {
+    @for (leaveRequest of leaveRequests$ | async; track leaveRequest.id) {
     <tr>
       <td>{{ leaveRequest.description }}</td>
       <td>{{ leaveRequest.leaveType }}</td>

@@ -26,7 +26,6 @@ import { RouterTestingModule } from '@angular/router/testing';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterTestingModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false,
