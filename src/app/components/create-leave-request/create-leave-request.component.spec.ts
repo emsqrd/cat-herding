@@ -7,24 +7,72 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { LeaveRequestFormComponent } from '../leave-request-form/leave-request-form.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { LeaveRequestModel } from '../../models/leave-request.model';
+import { LeaveTypeModel } from '../../models/leave-type.model';
+import { of } from 'rxjs';
+import { LeaveRequestsListComponent } from '../leave-requests-list/leave-requests-list.component';
 
 describe('CreateRequestComponent', () => {
   let component: CreateRequestComponent;
   let fixture: ComponentFixture<CreateRequestComponent>;
+  let router: Router;
+  let leaveRequestServiceMock: ReturnType<jest.Mock>;
+
+  let leaveRequestModel: LeaveRequestModel = {
+    id: 1,
+    description: 'asdf',
+    leaveDate: new Date(),
+    leaveType: 'Vacation',
+  };
+
+  let leaveTypeModel: LeaveTypeModel = {
+    id: 1,
+    name: 'Vacation',
+  };
 
   beforeEach(async () => {
+    leaveRequestServiceMock = {
+      getLeaveRequests: jest.fn(() => {
+        return of({} as LeaveRequestModel);
+      }),
+      getLeaveTypes: jest.fn(() => {
+        return of([{}] as LeaveTypeModel[]);
+      }),
+      createLeaveRequest: jest.fn(() => {
+        return of({} as LeaveRequestModel);
+      }),
+    };
+
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule, ReactiveFormsModule],
-      providers: [LeaveRequestsService, Router, FormBuilder],
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'list', component: LeaveRequestsListComponent },
+        ]),
+        HttpClientModule,
+        ReactiveFormsModule,
+      ],
+      providers: [
+        { provide: LeaveRequestsService, useValue: leaveRequestServiceMock },
+        FormBuilder,
+      ],
       declarations: [CreateRequestComponent, LeaveRequestFormComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CreateRequestComponent);
     component = fixture.componentInstance;
+    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should navigate to list after creating leave request', async () => {
+    const navigateSpy = jest.spyOn(router, 'navigate');
+
+    component.createLeaveRequest(leaveRequestModel);
+    expect(navigateSpy).toHaveBeenCalled();
+    expect(navigateSpy).toHaveBeenCalledWith(['/list']);
   });
 });
