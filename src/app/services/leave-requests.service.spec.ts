@@ -90,6 +90,8 @@ describe('RequestsService', () => {
       leaveDate: new Date('2023-11-10'),
     };
 
+    service.createLeaveRequest(expectedLeaveRequest);
+
     const url = 'api/leaveRequests';
 
     httpClient.post<LeaveRequestModel>(url, expectedLeaveRequest).subscribe();
