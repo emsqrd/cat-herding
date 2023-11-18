@@ -68,11 +68,13 @@ describe('CreateRequestComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to list after creating leave request', async () => {
-    const navigateSpy = jest.spyOn(router, 'navigate');
+  it('should navigate to list after creating leave request', () => {
+    fixture.ngZone?.run(() => {
+      const navigateSpy = jest.spyOn(router, 'navigate');
 
-    component.createLeaveRequest(leaveRequestModel);
-    expect(navigateSpy).toHaveBeenCalled();
-    expect(navigateSpy).toHaveBeenCalledWith(['/list']);
+      component.createLeaveRequest(leaveRequestModel);
+      expect(navigateSpy).toHaveBeenCalled();
+      expect(navigateSpy).toHaveBeenCalledWith(['/list']);
+    });
   });
 });
