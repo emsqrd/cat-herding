@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LeaveType } from '../../interfaces/leave-type';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { LeaveRequest } from '../../interfaces/leave-request';
 import { LeaveRequestModel } from '../../models/leave-request.model';
 import { LeaveRequestsService } from '../../services/leave-requests.service';
@@ -23,25 +23,17 @@ export class LeaveRequestFormComponent {
   formSubmitted = new EventEmitter<LeaveRequest>();
 
   leaveRequestForm: FormGroup = new FormGroup({});
-  leaveTypes: LeaveType[] = [];
+  leaveTypes: LeaveType[];
 
   constructor(
-    private router: Router,
     private fb: FormBuilder,
     private leaveRequestsService: LeaveRequestsService
   ) {}
 
-  get description() {
-    return this.leaveRequestForm.get('description');
-  }
-  get leaveDate() {
-    return this.leaveRequestForm.get('leaveDate');
-  }
-
-  getSubmitTypes(): void {
-    this.leaveRequestsService
-      .getLeaveTypes()
-      .subscribe((leaveTypes) => (this.leaveTypes = leaveTypes));
+  getLeaveTypes(): void {
+    this.leaveRequestsService.getLeaveTypes().subscribe((leaveTypes) => {
+      this.leaveTypes = leaveTypes;
+    });
   }
 
   submitForm(): void {
@@ -49,7 +41,7 @@ export class LeaveRequestFormComponent {
   }
 
   ngOnInit() {
-    this.getSubmitTypes();
+    this.getLeaveTypes();
 
     this.initialState.subscribe((leaveRequest) => {
       this.leaveRequestForm = this.fb.group({

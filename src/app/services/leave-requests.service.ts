@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { LeaveType } from '../interfaces/leave-type';
 import { MessageService } from './message.service';
@@ -15,32 +15,24 @@ export class LeaveRequestsService {
   private leaveRequestsUrl: string = `${this.baseUrl}/leaveRequests`;
   private leaveTypesUrl: string = `${this.baseUrl}/leaveTypes`;
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
-
   private log(message: string) {
-    // console.log(message);
-    this.messageService.add(`LeaveRequestService: ${message}`);
+    console.log(message);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      console.log(error);
+      // console.log(error);
 
-      // TODO: better job of transforming error for user consumption
-      console.log(`${operation} failed: ${error.message}`);
+      // // // TODO: better job of transforming error for user consumption
+      // console.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
 
-  constructor(
-    private http: HttpClient,
-    private messageService: MessageService
-  ) {}
+  constructor(private http: HttpClient) {}
 
   getLeaveTypes(): Observable<LeaveType[]> {
     let leaveTypes = this.http.get<LeaveType[]>(this.leaveTypesUrl).pipe(
@@ -81,11 +73,7 @@ export class LeaveRequestsService {
     leaveRequest: LeaveRequestModel
   ): Observable<LeaveRequestModel> {
     let createdLeaveRequest = this.http
-      .post<LeaveRequestModel>(
-        this.leaveRequestsUrl,
-        leaveRequest,
-        this.httpOptions
-      )
+      .post<LeaveRequestModel>(this.leaveRequestsUrl, leaveRequest)
       .pipe(
         tap((newLeaveRequest: LeaveRequestModel) =>
           this.log(`added new leave request w/ id: ${newLeaveRequest.id}`)
@@ -100,7 +88,7 @@ export class LeaveRequestsService {
     // otherwise the api returns a 404 because of an undefined id
     leaveRequest.id = id;
     let updatedLeaveRequest = this.http
-      .put(`${this.leaveRequestsUrl}/${id}`, leaveRequest, this.httpOptions)
+      .put(`${this.leaveRequestsUrl}/${id}`, leaveRequest)
       .pipe(
         tap((_) => this.log(`updated leave request w/ id: ${leaveRequest.id}`)),
         catchError(this.handleError<LeaveRequestModel>('updateLeaveRequest'))

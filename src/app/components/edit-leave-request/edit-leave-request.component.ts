@@ -24,10 +24,9 @@ export class EditLeaveRequestComponent {
       .updateLeaveRequest(this.leaveRequest.value.id, leaveRequest)
       .subscribe({
         next: () => {
-          this.router.navigate(['/leave-request-list']);
+          this.router.navigate(['/list']);
         },
         error: (error) => {
-          alert('Failed to update leave requestd');
           console.error(error);
         },
       });
@@ -37,7 +36,7 @@ export class EditLeaveRequestComponent {
     const id = parseInt(this.route.snapshot.paramMap.get('id')!);
 
     if (!id) {
-      alert('No id provided');
+      console.error('No id provided');
     }
 
     this.leaveRequestService
