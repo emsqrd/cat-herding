@@ -21,7 +21,7 @@ export class EditLeaveRequestComponent {
 
   editLeaveRequest(leaveRequest: LeaveRequest) {
     this.leaveRequestService
-      .updateLeaveRequest(this.leaveRequest.value.id, leaveRequest)
+      .updateLeaveRequest(this.leaveRequest.value.id!, leaveRequest)
       .subscribe({
         next: () => {
           this.router.navigate(['/list']);

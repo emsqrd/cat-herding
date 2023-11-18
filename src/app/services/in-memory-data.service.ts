@@ -37,6 +37,6 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 
   genId<T extends LeaveRequest | LeaveType>(myTable: T[]): number {
-    return myTable.length > 0 ? Math.max(...myTable.map((t) => t.id)) + 1 : 1;
+    return myTable.length > 0 ? Math.max(...myTable.map((t) => t.id!)) + 1 : 1;
   }
 }
