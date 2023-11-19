@@ -17,26 +17,15 @@ describe('CreateRequestComponent', () => {
   let fixture: ComponentFixture<CreateRequestComponent>;
   let router: Router;
   let leaveRequestServiceMock: ReturnType<jest.Mock>;
-
-  let leaveRequestModel: LeaveRequestModel = {
-    id: 1,
-    description: 'asdf',
-    leaveDate: new Date(),
-    leaveType: 'Vacation',
-  };
-
-  let leaveTypeModel: LeaveTypeModel = {
-    id: 1,
-    name: 'Vacation',
-  };
+  let leaveRequestModelMock: ReturnType<jest.Mock>;
 
   beforeEach(async () => {
     leaveRequestServiceMock = {
-      getLeaveRequests: jest.fn(() => {
-        return of({} as LeaveRequestModel);
-      }),
       getLeaveTypes: jest.fn(() => {
         return of([{}] as LeaveTypeModel[]);
+      }),
+      getLeaveRequests: jest.fn(() => {
+        return of({} as LeaveRequestModel);
       }),
       createLeaveRequest: jest.fn(() => {
         return of({} as LeaveRequestModel);
@@ -72,7 +61,7 @@ describe('CreateRequestComponent', () => {
     fixture.ngZone?.run(() => {
       const navigateSpy = jest.spyOn(router, 'navigate');
 
-      component.createLeaveRequest(leaveRequestModel);
+      component.createLeaveRequest(leaveRequestModelMock);
       expect(navigateSpy).toHaveBeenCalled();
       expect(navigateSpy).toHaveBeenCalledWith(['/list']);
     });
