@@ -75,11 +75,25 @@
           "options": {
             "buildTarget": "cat-herding:build"
           }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
+            "scripts": []
+          }
         }
+      },
+      "cli": {
+        "analytics": false
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": "ffab16ff-009e-4632-8d0b-2fae05f230d7"
   }
 }

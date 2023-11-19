@@ -10,13 +10,13 @@ describe('AppComponent', () => {
     }).compileComponents();
   });
 
-  test('should create the app', () => {
+  it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  test(`should have as title 'cat-herding'`, () => {
+  it(`should have as title 'cat-herding'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('cat-herding');

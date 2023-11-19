@@ -53,10 +53,7 @@ describe('RequestsService', () => {
     const url = 'api/leaveTypes';
 
     service.getLeaveTypes().subscribe((leaveTypes) => {
-      console.log(leaveTypes[0].name);
-      console.log(leaveTypeModelMock[0].name);
-      console.log(leaveTypes);
-      expect(leaveTypes[0]).not.toEqual(leaveTypeModelMock[0]);
+      expect(leaveTypes).toEqual(leaveTypeModelMock);
     });
 
     const req = httpTestingController.expectOne(url);
@@ -76,8 +73,6 @@ describe('RequestsService', () => {
 
     const url = `api/leaveRequests/${expectedLeaveRequest.id}`;
 
-    // httpClient.put<LeaveRequestModel>(url, expectedLeaveRequest).subscribe();
-
     service
       .updateLeaveRequest(expectedLeaveRequest.id, expectedLeaveRequest)
       .subscribe((data) => expect(data).toEqual(expectedLeaveRequest));
@@ -87,9 +82,6 @@ describe('RequestsService', () => {
     expect(req.request.method).toEqual('PUT');
 
     req.flush(expectedLeaveRequest);
-
-    // expect(req.request.body).not.toBeNull();
-    // expect(req.request.body).toEqual(expectedLeaveRequest);
   });
 
   // it('creates a new leave request', async () => {
