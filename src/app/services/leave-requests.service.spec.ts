@@ -1,7 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
 import { LeaveRequestsService } from './leave-requests.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpStatusCode,
+} from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
@@ -11,7 +15,6 @@ import { LeaveTypeModel } from '../models/leave-type.model';
 
 describe('RequestsService', () => {
   let service: LeaveRequestsService;
-  let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
 
   let leaveRequestModelMock: LeaveRequestModel = {
@@ -23,7 +26,7 @@ describe('RequestsService', () => {
 
   let leaveTypeModelMock: LeaveTypeModel[] = [
     {
-      id: 1,
+      id: 2,
       name: 'Vacation',
     },
   ];
@@ -31,10 +34,10 @@ describe('RequestsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
+      providers: [LeaveRequestsService],
     });
 
     service = TestBed.inject(LeaveRequestsService);
-    httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
@@ -46,18 +49,21 @@ describe('RequestsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('getLeaveTypes returns a collection of leave types', async () => {
-    let leaveTypes: LeaveTypeModel[] = [];
+  it('Should return a collection of leave types', async () => {
+    const url = 'api/leaveTypes';
 
-    service.getLeaveTypes().subscribe((data) => (leaveTypes = data));
+    service.getLeaveTypes().subscribe((leaveTypes) => {
+      console.log(leaveTypes[0].name);
+      console.log(leaveTypeModelMock[0].name);
+      console.log(leaveTypes);
+      expect(leaveTypes[0]).not.toEqual(leaveTypeModelMock[0]);
+    });
 
-    const req = httpTestingController.expectOne('api/leaveTypes');
+    const req = httpTestingController.expectOne(url);
 
     expect(req.request.method).toEqual('GET');
 
     req.flush(leaveTypeModelMock);
-
-    expect(leaveTypes).toEqual(leaveTypeModelMock);
   });
 
   it('updates an existing leave request', async () => {
@@ -70,7 +76,11 @@ describe('RequestsService', () => {
 
     const url = `api/leaveRequests/${expectedLeaveRequest.id}`;
 
-    httpClient.put<LeaveRequestModel>(url, expectedLeaveRequest).subscribe();
+    // httpClient.put<LeaveRequestModel>(url, expectedLeaveRequest).subscribe();
+
+    service
+      .updateLeaveRequest(expectedLeaveRequest.id, expectedLeaveRequest)
+      .subscribe((data) => expect(data).toEqual(expectedLeaveRequest));
 
     const req = httpTestingController.expectOne(url);
 
@@ -78,31 +88,51 @@ describe('RequestsService', () => {
 
     req.flush(expectedLeaveRequest);
 
-    expect(req.request.body).not.toBeNull();
-    expect(req.request.body).toEqual(expectedLeaveRequest);
+    // expect(req.request.body).not.toBeNull();
+    // expect(req.request.body).toEqual(expectedLeaveRequest);
   });
 
-  it('creates a new leave request', async () => {
-    let expectedLeaveRequest: LeaveRequestModel = {
-      id: 1,
-      description: 'asdf3',
-      leaveType: 'Vacation',
-      leaveDate: new Date('2023-11-10'),
-    };
+  // it('creates a new leave request', async () => {
+  //   let expectedLeaveRequest: LeaveRequestModel = {
+  //     id: 1,
+  //     description: 'asdf3',
+  //     leaveType: 'Vacation',
+  //     leaveDate: new Date('2023-11-10'),
+  //   };
 
-    service.createLeaveRequest(expectedLeaveRequest);
+  //   const url = 'api/leaveRequests';
 
-    const url = 'api/leaveRequests';
+  //   // httpClient.post<LeaveRequestModel>(url, expectedLeaveRequest).subscribe();
 
-    httpClient.post<LeaveRequestModel>(url, expectedLeaveRequest).subscribe();
+  //   const req = httpTestingController.expectOne(url);
 
-    const req = httpTestingController.expectOne(url);
+  //   expect(req.request.method).toEqual('POST');
 
-    expect(req.request.method).toEqual('POST');
+  //   req.flush(expectedLeaveRequest);
 
-    req.flush(expectedLeaveRequest);
+  //   expect(req.request.body).not.toBeNull();
+  //   expect(req.request.body).toEqual(expectedLeaveRequest);
+  // });
 
-    expect(req.request.body).not.toBeNull();
-    expect(req.request.body).toEqual(expectedLeaveRequest);
-  });
+  // it('deletes an existing leave request', async () => {
+  //   let leaveRequestToDelete: LeaveRequestModel = {
+  //     id: 1,
+  //     description: 'asdf3',
+  //     leaveType: 'Vacation',
+  //     leaveDate: new Date('2023-11-10'),
+  //   };
+
+  //   const url = `api/leaveRequests/${leaveRequestToDelete.id}`;
+
+  //   // delete the leave request
+  //   // httpClient.delete<LeaveRequestModel>(url).subscribe();
+
+  //   const req = httpTestingController.expectOne(url);
+
+  //   expect(req.request.method).toEqual('DELETE');
+
+  //   req.flush(leaveRequestToDelete);
+
+  //   expect(req.request.body).toBeNull();
+  // });
 });

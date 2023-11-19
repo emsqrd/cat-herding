@@ -3,7 +3,7 @@ import { LeaveType } from '../interfaces/leave-type';
 import { LeaveTypeModel } from './leave-type.model';
 
 export class LeaveRequestModel implements LeaveRequest {
-  id?: number;
+  id: number;
   description: string;
   leaveType: string;
   leaveDate: Date;

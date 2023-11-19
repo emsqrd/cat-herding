@@ -21,11 +21,11 @@ describe('CreateRequestComponent', () => {
 
   beforeEach(async () => {
     leaveRequestServiceMock = {
-      getLeaveRequests: jest.fn(() => {
-        return of({} as LeaveRequestModel);
-      }),
       getLeaveTypes: jest.fn(() => {
         return of([{}] as LeaveTypeModel[]);
+      }),
+      getLeaveRequests: jest.fn(() => {
+        return of({} as LeaveRequestModel);
       }),
       createLeaveRequest: jest.fn(() => {
         return of({} as LeaveRequestModel);
