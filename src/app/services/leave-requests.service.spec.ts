@@ -49,7 +49,7 @@ describe('RequestsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('Should return a collection of leave types', async () => {
+  it('should return a collection of leave types', async () => {
     const url = 'api/leaveTypes';
 
     service.getLeaveTypes().subscribe((leaveTypes) => {
@@ -63,7 +63,7 @@ describe('RequestsService', () => {
     req.flush(leaveTypeModelMock);
   });
 
-  it('updates an existing leave request', async () => {
+  it('should updated an existing leave request', async () => {
     let expectedLeaveRequest: LeaveRequestModel = {
       id: 2,
       description: 'asdf3',
@@ -84,27 +84,26 @@ describe('RequestsService', () => {
     req.flush(expectedLeaveRequest);
   });
 
-  // it('creates a new leave request', async () => {
-  //   let expectedLeaveRequest: LeaveRequestModel = {
-  //     id: 1,
-  //     description: 'asdf3',
-  //     leaveType: 'Vacation',
-  //     leaveDate: new Date('2023-11-10'),
-  //   };
+  it('should create a new leave request', async () => {
+    let expectedLeaveRequest: LeaveRequestModel = {
+      id: 1,
+      description: 'asdf3',
+      leaveType: 'Vacation',
+      leaveDate: new Date('2023-11-10'),
+    };
 
-  //   const url = 'api/leaveRequests';
+    service.createLeaveRequest(expectedLeaveRequest).subscribe((data) => {
+      expect(data).toEqual(expectedLeaveRequest);
+    });
 
-  //   // httpClient.post<LeaveRequestModel>(url, expectedLeaveRequest).subscribe();
+    const url = 'api/leaveRequests';
 
-  //   const req = httpTestingController.expectOne(url);
+    const req = httpTestingController.expectOne(url);
 
-  //   expect(req.request.method).toEqual('POST');
+    expect(req.request.method).toEqual('POST');
 
-  //   req.flush(expectedLeaveRequest);
-
-  //   expect(req.request.body).not.toBeNull();
-  //   expect(req.request.body).toEqual(expectedLeaveRequest);
-  // });
+    req.flush(expectedLeaveRequest);
+  });
 
   // it('deletes an existing leave request', async () => {
   //   let leaveRequestToDelete: LeaveRequestModel = {
@@ -116,15 +115,14 @@ describe('RequestsService', () => {
 
   //   const url = `api/leaveRequests/${leaveRequestToDelete.id}`;
 
-  //   // delete the leave request
-  //   // httpClient.delete<LeaveRequestModel>(url).subscribe();
+  //   service
+  //     .deleteLeaveRequest(leaveRequestToDelete.id)
+  //     .subscribe((data) => expect(data).toBeNull());
 
   //   const req = httpTestingController.expectOne(url);
 
   //   expect(req.request.method).toEqual('DELETE');
 
   //   req.flush(leaveRequestToDelete);
-
-  //   expect(req.request.body).toBeNull();
   // });
 });

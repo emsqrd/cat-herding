@@ -31,6 +31,7 @@ export class LeaveRequestFormComponent {
   ) {}
 
   getLeaveTypes(): void {
+    console.log('getleavetypes');
     this.leaveRequestsService.getLeaveTypes().subscribe((leaveTypes) => {
       this.leaveTypes = leaveTypes;
     });
